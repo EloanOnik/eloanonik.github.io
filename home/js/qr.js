@@ -62,7 +62,6 @@ var span = document.getElementsByClassName("close")[0];
 // Открываем модальное окно при клике на кнопку
 btn.addEventListener("click", function() {
     modal.style.display = "block";
-    console.log('Открыте qr сработало!');
 });
 
 // Закрываем модальное окно при клике на крестик
@@ -77,4 +76,9 @@ window.onclick = function(event) {
     }
 }
 
+document.getElementById('modalBtn').addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  // код открытия модального окна
+}, {passive: false});
 
+ 
