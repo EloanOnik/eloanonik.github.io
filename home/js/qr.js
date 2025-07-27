@@ -49,6 +49,34 @@ document.addEventListener('mousemove', (e) => {
     const hue2 = Math.floor(percentY * 360)
 
     const color1 =  hsl(${hue1}, 100%, 50%)
-    const color2 = hsl(${hue2}, 100%, 50%)
+    константа цвет2 = hsl(${hue2}, 100%, 50%)
 
     gradientLayer.style.background = linear-gradient(${angle}deg, ${color1}, ${color2})
+})
+
+// Получаем элементы
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("modalBtn");
+var span = document.getElementsByClassName("close")[0];
+
+// Открываем модальное окно при клике на кнопку
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// Закрываем модальное окно при клике на крестик
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Закрываем модальное окно при клике вне его области
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+document.getElementById('modalBtn').addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  // код открытия модального окна
+}, {passive: false});
