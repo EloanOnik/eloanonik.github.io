@@ -60,9 +60,10 @@ var btn = document.getElementById("modalBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // Открываем модальное окно при клике на кнопку
-btn.onclick = function() {
+btn.addEventListener("click", function() {
     modal.style.display = "block";
-}
+    console.log('Модальное окно открылось');
+});
 
 // Закрываем модальное окно при клике на крестик
 span.onclick = function() {
