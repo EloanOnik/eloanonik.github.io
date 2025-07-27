@@ -1,5 +1,4 @@
-import QRCodeStyling from 'https://cdn.skypack.dev/qr-code-styling'
-
+import QRCodeStyling from 'https://esm.sh/qr-code-styling@1.9.2';
 const qrCode = new QRCodeStyling({
     width: 300,
     height: 300,
