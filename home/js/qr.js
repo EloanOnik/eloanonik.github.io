@@ -61,8 +61,9 @@ var btn = document.getElementById("modalBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // Открываем модальное окно при клике на кнопку
-btn.addEventListener("click", function() {
-    modal.style.display = "block";
+document.getElementById("modalBtn").addEventListener("click", function(e) {
+    e.preventDefault(); // Предотвращаем переход по ссылке
+    document.getElementById("myModal").style.display = "block";
     console.log('Модальное окно открылось');
 });
 
