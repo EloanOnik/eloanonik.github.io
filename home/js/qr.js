@@ -24,8 +24,8 @@ setTimeout(() => {
     const canvas = qrDiv.querySelector('canvas')
     if (canvas) {
         const dataUrl = canvas.toDataURL('image/png')
-        gradientLayer.style.maskImage =  url(${dataUrl})
-        gradientLayer.style.webkitMaskImage = url(${dataUrl})
+        gradientLayer.style.maskImage = `url(${dataUrl})`
+        gradientLayer.style.webkitMaskImage = `url(${dataUrl})`
     }
 }, 300)
 
@@ -48,10 +48,10 @@ document.addEventListener('mousemove', (e) => {
     const hue1 = Math.floor(percentX * 360)
     const hue2 = Math.floor(percentY * 360)
 
-    const color1 =  hsl(${hue1}, 100%, 50%)
-    константа цвет2 = hsl(${hue2}, 100%, 50%)
+    const color1 = `hsl(${hue1}, 100%, 50%)`
+    const color2 = `hsl(${hue2}, 100%, 50%)`
 
-    gradientLayer.style.background = linear-gradient(${angle}deg, ${color1}, ${color2})
+    gradientLayer.style.background = `linear-gradient(${angle}deg, ${color1}, ${color2})`
 })
 
 // Получаем элементы
@@ -60,10 +60,9 @@ var btn = document.getElementById("modalBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // Открываем модальное окно при клике на кнопку
-btn.addEventListener("click", function() {
+btn.onclick = function() {
     modal.style.display = "block";
-    console.log('Qr сработал!');
-});
+}
 
 // Закрываем модальное окно при клике на крестик
 span.onclick = function() {
@@ -77,9 +76,4 @@ window.onclick = function(event) {
     }
 }
 
-document.getElementById('modalBtn').addEventListener('touchstart', function(e) {
-  e.preventDefault();
-  // код открытия модального окна
-}, {passive: false});
 
- 
