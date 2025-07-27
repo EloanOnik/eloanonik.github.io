@@ -1,33 +1,54 @@
-// home/js/qr.js
-export function initQR() {
-    const modalBtn = document.getElementById('modalBtn');
-    const modal = document.getElementById('myModal');
-    const closeBtn = modal.querySelector('.close');
+import QRCodeStyling from 'https://cdn.skypack.dev/qr-code-styling'
 
-    if (!modalBtn || !modal || !closeBtn) {
-        console.warn('QR: Некоторые элементы не найдены');
-        return;
+const qrCode = new QRCodeStyling({
+    width: 300,
+    height: 300,
+    type: 'canvas',
+    data: 'https://t.me/onikeloyan',
+    dotsOptions: {
+        type: 'rounded',
+        color: '#000000',
+    },
+    backgroundOptions: {
+        color: 'transparent',
+    },
+})
+
+const qrDiv = document.getElementById('qr')
+const gradientLayer = document.getElementById('gradient-layer')
+
+qrCode.append(qrDiv)
+
+// Получить canvas и применить маску
+setTimeout(() => {
+    const canvas = qrDiv.querySelector('canvas')
+    if (canvas) {
+        const dataUrl = canvas.toDataURL('image/png')
+        gradientLayer.style.maskImage =  url(${dataUrl})
+        gradientLayer.style.webkitMaskImage = url(${dataUrl})
     }
+}, 300)
 
-    // Показ модального окна
-    modalBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        modal.classList.add('show');
-    });
+// Плавно меняем угол градиента
+document.addEventListener('mousemove', (e) => {
+    const rect = qrDiv.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
 
-    modalBtn.addEventListener('touchstart', function (e) {
-        e.preventDefault();
-        modal.classList.add('show');
-    });
+    const dx = e.clientX - centerX
+    const dy = e.clientY - centerY
 
-    // Закрытие модального окна
-    closeBtn.addEventListener('click', function () {
-        modal.classList.remove('show');
-    });
+    const angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90
 
-    window.addEventListener('click', function (e) {
-        if (e.target === modal) {
-            modal.classList.remove('show');
-        }
-    });
-}
+    // Преобразуем позицию мыши в проценты
+    const percentX = e.clientX / window.innerWidth
+    const percentY = e.clientY / window.innerHeight
+
+    // Преобразуем в цвет через hls — удобно для градиентов
+    const hue1 = Math.floor(percentX * 360)
+    const hue2 = Math.floor(percentY * 360)
+
+    const color1 =  hsl(${hue1}, 100%, 50%)
+    const color2 = hsl(${hue2}, 100%, 50%)
+
+    gradientLayer.style.background = linear-gradient(${angle}deg, ${color1}, ${color2})
