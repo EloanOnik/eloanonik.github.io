@@ -28,4 +28,5 @@ document.addEventListener('DOMContentLoaded', function() {
         preloader.style.display = 'none';
         content.style.display = 'block';
     }
-}); 
+});
+
