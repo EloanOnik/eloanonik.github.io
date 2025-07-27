@@ -1,5 +1,6 @@
-import QRCodeStyling from 'https://cdn.skypack.dev/qr-code-styling'
+import QRCodeStyling from "https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js";
 
+// Создание QR-кода
 const qrCode = new QRCodeStyling({
     width: 300,
     height: 300,
@@ -12,73 +13,75 @@ const qrCode = new QRCodeStyling({
     backgroundOptions: {
         color: 'transparent',
     },
-})
+});
 
-const qrDiv = document.getElementById('qr')
-const gradientLayer = document.getElementById('gradient-layer')
+document.addEventListener("DOMContentLoaded", () => {
+    const qrDiv = document.getElementById('qr');
+    const gradientLayer = document.getElementById('gradient-layer');
+    const modal = document.getElementById("myModal");
+    const btn = document.getElementById("modalBtn");
+    const span = document.querySelector(".close");
 
-qrCode.append(qrDiv)
+    if (!qrDiv || !gradientLayer || !modal || !btn || !span) return;
 
-// Получить canvas и применить маску
-setTimeout(() => {
-    const canvas = qrDiv.querySelector('canvas')
-    if (canvas) {
-        const dataUrl = canvas.toDataURL('image/png')
-        gradientLayer.style.maskImage = `url(${dataUrl})`
-        gradientLayer.style.webkitMaskImage = `url(${dataUrl})`
-    }
-}, 300)
+    qrCode.append(qrDiv);
 
-// Плавно меняем угол градиента
-document.addEventListener('mousemove', (e) => {
-    const rect = qrDiv.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
+    // Применяем маску из QR
+    setTimeout(() => {
+        const canvas = qrDiv.querySelector('canvas');
+        if (canvas) {
+            const dataUrl = canvas.toDataURL('image/png');
+            gradientLayer.style.maskImage = `url(${dataUrl})`;
+            gradientLayer.style.webkitMaskImage = `url(${dataUrl})`;
+        }
+    }, 300);
 
-    const dx = e.clientX - centerX
-    const dy = e.clientY - centerY
+    // Плавное изменение градиента
+    const handleMove = (e) => {
+        const rect = qrDiv.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
-    const angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-    // Преобразуем позицию мыши в проценты
-    const percentX = e.clientX / window.innerWidth
-    const percentY = e.clientY / window.innerHeight
+        const dx = clientX - centerX;
+        const dy = clientY - centerY;
 
-    // Преобразуем в цвет через hls — удобно для градиентов
-    const hue1 = Math.floor(percentX * 360)
-    const hue2 = Math.floor(percentY * 360)
+        const angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
 
-    const color1 = `hsl(${hue1}, 100%, 50%)`
-    const color2 = `hsl(${hue2}, 100%, 50%)`
+        const percentX = clientX / window.innerWidth;
+        const percentY = clientY / window.innerHeight;
 
-    gradientLayer.style.background = `linear-gradient(${angle}deg, ${color1}, ${color2})`
-})
+        const hue1 = Math.floor(percentX * 360);
+        const hue2 = Math.floor(percentY * 360);
 
-// Получаем элементы
-var modal = document.getElementById("myModal");
-var btn = document.getElementById("modalBtn");
-var span = document.getElementsByClassName("close")[0];
+        const color1 = `hsl(${hue1}, 100%, 50%)`;
+        const color2 = `hsl(${hue2}, 100%, 50%)`;
 
-// Открываем модальное окно при клике на кнопку
-btn.onclick = function() {
-    modal.style.display = "block";
-}
+        gradientLayer.style.background = `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+    };
 
-// Закрываем модальное окно при клике на крестик
-span.onclick = function() {
-    modal.style.display = "none";
-}
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('touchmove', handleMove, { passive: true });
 
-// Закрываем модальное окно при клике вне его области
-window.onclick = function(event) {
-    if (event.target == modal) {
+    // Открытие модального окна
+    const openModal = (e) => {
+        e.preventDefault();
+        modal.style.display = "block";
+    };
+
+    btn.addEventListener('click', openModal);
+    btn.addEventListener('touchstart', openModal, { passive: false });
+
+    // Закрытие модального окна
+    span.onclick = () => {
         modal.style.display = "none";
-    }
-}
+    };
 
-document.getElementById('modalBtn').addEventListener('touchstart', function(e) {
-  e.preventDefault();
-  // код открытия модального окна
-}, {passive: false});
-
-
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+});
