@@ -14,6 +14,7 @@ const qrCode = new QRCodeStyling({
     },
 })
 
+
 const qrDiv = document.getElementById('qr')
 const gradientLayer = document.getElementById('gradient-layer')
 
