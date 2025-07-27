@@ -76,7 +76,4 @@ window.onclick = function(event) {
     }
 }
 
-document.getElementById('modalBtn').addEventListener('touchstart', function(e) {
-  e.preventDefault();
-  // код открытия модального окна
-}, {passive: false});
+
