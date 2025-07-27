@@ -27,7 +27,7 @@ setTimeout(() => {
         gradientLayer.style.maskImage = `url(${dataUrl})`
         gradientLayer.style.webkitMaskImage = `url(${dataUrl})`
     }
-}, 120000)
+}, 300)
 
 // Плавно меняем угол градиента
 document.addEventListener('mousemove', (e) => {
