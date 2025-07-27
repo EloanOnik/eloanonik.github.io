@@ -1,4 +1,5 @@
-import QRCodeStyling from 'https://esm.sh/qr-code-styling@1.9.2';
+import QRCodeStyling from 'https://cdn.skypack.dev/qr-code-styling'
+
 const qrCode = new QRCodeStyling({
     width: 300,
     height: 300,
@@ -12,7 +13,6 @@ const qrCode = new QRCodeStyling({
         color: 'transparent',
     },
 })
-
 
 const qrDiv = document.getElementById('qr')
 const gradientLayer = document.getElementById('gradient-layer')
@@ -60,29 +60,20 @@ var btn = document.getElementById("modalBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // Открываем модальное окно при клике на кнопку
+btn.onclick = function() {
+    modal.style.display = "block";
+}
 
-document.addEventListener('DOMContentLoaded', function() {
-    const modalBtn = document.getElementById("modalBtn");
-    const modal = document.getElementById("myModal");
-    const closeBtn = document.querySelector(".close");
-    
-    if (modalBtn && modal && closeBtn) {
-        modalBtn.addEventListener("click", function(e) {
-            e.preventDefault();
-            modal.style.display = "block";
-            console.log('Модальное окно открылось');
-        });
-        
-        closeBtn.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
-        
-        window.addEventListener("click", function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        });
-    } else {
-        console.error("Не удалось найти элементы модального окна");
+// Закрываем модальное окно при клике на крестик
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Закрываем модальное окно при клике вне его области
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
     }
-});
+}
+
+
