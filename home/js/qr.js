@@ -61,22 +61,29 @@ var btn = document.getElementById("modalBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // Открываем модальное окно при клике на кнопку
-document.getElementById("modalBtn").addEventListener("click", function(e) {
-    e.preventDefault(); // Предотвращаем переход по ссылке
-    document.getElementById("myModal").style.display = "block";
-    console.log('Модальное окно открылось');
-});
 
-// Закрываем модальное окно при клике на крестик
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// Закрываем модальное окно при клике вне его области
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+document.addEventListener('DOMContentLoaded', function() {
+    const modalBtn = document.getElementById("modalBtn");
+    const modal = document.getElementById("myModal");
+    const closeBtn = document.querySelector(".close");
+    
+    if (modalBtn && modal && closeBtn) {
+        modalBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            modal.style.display = "block";
+            console.log('Модальное окно открылось');
+        });
+        
+        closeBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+        
+        window.addEventListener("click", function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+    } else {
+        console.error("Не удалось найти элементы модального окна");
     }
-}
-
-
+});
